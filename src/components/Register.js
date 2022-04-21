@@ -1,7 +1,7 @@
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
-import local_temp_store from "../data_access_layer/local_temporary_storage";
 import { useNavigate } from "react-router-dom";
+import apiAccess from "../communication/apiAccess";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -22,12 +22,18 @@ const Register = () => {
   };
 
   let onSubmitHandler = (e) => {
-    local_temp_store.customers.push({
-      name: name,
-      email: email,
-      password: password,
-    });
-    navigate("/login");
+    e.preventDefault();
+    apiAccess
+      .addCustomer(name, email, password)
+      .then((x) => {
+        if (x) {
+          navigate("/login");
+        }
+      })
+      .catch((e) => {
+        alert("Registration failed.");
+        console.log(e);
+      });
   };
 
   return (

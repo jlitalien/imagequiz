@@ -10,12 +10,12 @@ const Menu = (props) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {props.customer ? (
+              <Navbar.Text>Signed in as {props.customer};</Navbar.Text>
+            ) : (
               <>
                 <Nav.Link href="#/register">Register</Nav.Link>
                 <Nav.Link href="#/login">Login</Nav.Link>
               </>
-            ) : (
-              <Navbar.Text>Signed in as {props.customer};</Navbar.Text>
             )}
           </Nav>
         </Navbar.Collapse>

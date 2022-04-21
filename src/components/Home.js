@@ -1,9 +1,21 @@
-import flowers from "./Flowers";
 import { Container, Row, Col } from "react-bootstrap";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
-
+import { useEffect, useState } from "react";
+import apiAccess from "../communication/apiAccess";
+import flowers from "./Flowers";
 const Home = () => {
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   apiAccess.getFlowers().then((x) =>
+  //     setFlowers(x).catch((e) => {
+  //       console.log(e);
+  //       alert("Something went wrong");
+  //     })
+  //   );
+  // }, []);
+
   return (
     <Container fluid>
       <Row>

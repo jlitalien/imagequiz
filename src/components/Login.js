@@ -1,7 +1,8 @@
-import local_temp_store from "../data_access_layer/local_temporary_storage";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import apiAccess from "../communication/apiAccess";
+
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,16 +17,21 @@ const Login = (props) => {
   };
 
   let onSubmitHandler = (e) => {
-    let found = local_temp_store.customers.find(
-      (x) =>
-        x.email.toLowerCase() === email.toLowerCase() && x.password === password
-    );
-    if (found) {
-      props.customerLoggedIn(email);
-      navigate("/");
-    } else {
-      alert("User does not exist");
-    }
+    e.preventDefault();
+    apiAccess
+      .login(email, password)
+      .then((x) => {
+        if (x.done) {
+          props.customerLoggedIn(email);
+          navigate("/");
+        } else {
+          alert("The credentials are not valid");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Something went wrong");
+      });
   };
 
   return (
